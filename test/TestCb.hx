@@ -4,7 +4,11 @@ import TestMsg;
 @:enum
 abstract TestState(Int) from Int to Int {}
 
-class TestCb extends sm.SM.Context {
+class TestCb implements sm.SM.IState {
+
+  public function new(s:TestState) {
+	  state = s;
+  }
     
   public function action1(event:TestMsg) : Void {
     trace("action1");

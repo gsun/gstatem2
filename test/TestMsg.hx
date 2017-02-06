@@ -2,7 +2,7 @@
 @:enum
 abstract TestEvent(Int) from Int to Int {}
 
-class TestMsg extends sm.SM.Msg {
+class TestMsg implements sm.SM.IEvent {
 
     public var sm(get, never) : String;    
     private var my_sm:String; 
@@ -12,7 +12,7 @@ class TestMsg extends sm.SM.Msg {
     }
     
     public function new(e:TestEvent) {
-        super(e);
+        event = e;
         my_sm = "umltest";     
     }
 }

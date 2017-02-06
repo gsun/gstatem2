@@ -1,39 +1,16 @@
 package sm;
 
-class Msg {
 
-  public var event(get, never) : Int;
-  private var my_event : Int; 
- 
-  public function get_event() {
-      return this.my_event;
-  }
-  public function new(event) {
-      my_event = event;
-  }
-  
-  public function destructor() {}
-
+@:autoBuild(sm.SMBuilder.buildIState())
+interface IState {
+  public var state(get, set) : Int;
+  public function destructor() : Void;
 }
 
-class Context {
-
-  public var state(get, set) : Int;
-  private var my_state : Int;
-
-  public function get_state() {
-      return my_state;
-  }
-  public function set_state(state) {
-      return my_state = state;
-  }
-  
-  public function new(state) {
-      my_state = state;
-  }
-
-  public function destructor() {}
-
+@:autoBuild(sm.SMBuilder.buildIEvent())
+interface IEvent {
+  public var event(get, set) : Int;
+  public function destructor() : Void;
 }
 
 class TransitionBehavior {
