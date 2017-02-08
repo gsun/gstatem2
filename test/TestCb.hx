@@ -9,7 +9,9 @@ class TestCb implements sm.SM.IState {
   public function new(s:TestState) {
 	  state = s;
   }
-    
+ 
+  public function destructor() {} 
+  
   public function action1(event:TestMsg) : Void {
     trace("action1");
     return null;

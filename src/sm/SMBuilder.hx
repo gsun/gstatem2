@@ -42,10 +42,7 @@ class SMBuilder {
               }
               public function set_state(state) {
                   return __state = state;
-              }
-              
-              public function destructor() {}
-                    }).fields);
+              }}).fields);
         return fields;
     }
 
@@ -61,9 +58,7 @@ class SMBuilder {
 
               public function set_event(event) {
                   return __event = event;
-              }           
-              public function destructor() {}
-                    }).fields);
+              }}).fields);
         return fields;
     }   
     

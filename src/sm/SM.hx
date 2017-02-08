@@ -10,7 +10,6 @@ interface IState {
 @:autoBuild(sm.SMBuilder.buildIEvent())
 interface IEvent {
   public var event(get, set) : String;
-  public function destructor() : Void;
 }
 
 class TransitionBehavior {
@@ -200,8 +199,6 @@ class SM {
           /*find next transition if my_stateId/my_eventId changed, which is used for pesudo state or exception event.*/
           transition = this.findTransition(my_stateId, my_eventId, context, my_msg);
       }
-      
-      my_msg.destructor();
 
       if (isFinalState(my_stateId))
       {
