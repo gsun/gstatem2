@@ -2,7 +2,7 @@ import TestMsg;
 
 @:build(sm.SMBuilder.buildState("umltest"))
 @:enum
-abstract TestState(Int) from Int to Int {}
+abstract TestState(String) from String to String {}
 
 class TestCb implements sm.SM.IState {
 

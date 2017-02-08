@@ -1,6 +1,6 @@
 @:build(sm.SMBuilder.buildEvent("umltest"))
 @:enum
-abstract TestEvent(Int) from Int to Int {}
+abstract TestEvent(String) from String to String {}
 
 class TestMsg implements sm.SM.IEvent {
 

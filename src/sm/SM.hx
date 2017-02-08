@@ -3,13 +3,13 @@ package sm;
 
 @:autoBuild(sm.SMBuilder.buildIState())
 interface IState {
-  public var state(get, set) : Int;
+  public var state(get, set) : String;
   public function destructor() : Void;
 }
 
 @:autoBuild(sm.SMBuilder.buildIEvent())
 interface IEvent {
-  public var event(get, set) : Int;
+  public var event(get, set) : String;
   public function destructor() : Void;
 }
 
@@ -19,7 +19,7 @@ class TransitionBehavior {
     public var transit : String;
     public var entryExit: String;
     
-    public var nextState : Int;
+    public var nextState : String;
 
     public function new(a, b, c, d) {
         this.description = a;
@@ -33,15 +33,15 @@ class SmTransition {
 
   public var description : String;
 
-  public var fromState : Int;
+  public var fromState : String;
 
-  public var eventId : Int;
+  public var eventId : String;
 
   public var guard : String;
  
   public var behaviors : Array<TransitionBehavior>;
 
-  public var toState : Int;
+  public var toState : String;
   
     public function new(a, b, c, d, e, f) {
         this.description = a;
@@ -55,7 +55,7 @@ class SmTransition {
  
 class SmVertex {
 
-  public var state : Int;
+  public var state : String;
 
   public var pseudostate : Bool; 
   
@@ -75,7 +75,7 @@ class SM {
 
   private var name : String;
 
-  private var vertices : Map<Int, SmVertex>;
+  private var vertices : Map<String, SmVertex>;
 
   private static var sms : Map<String, Dynamic> = new Map(); 
 
@@ -96,7 +96,7 @@ class SM {
         return sms.keys();
   }
   
-  public function findTransition(state : Int, event : Int, context : Dynamic,  msg : Dynamic) : SmTransition {      
+  public function findTransition(state : String, event : String, context : Dynamic,  msg : Dynamic) : SmTransition {      
       var vertix = this.vertices.get(state);
       if (vertix == null) return null;  
       
@@ -113,7 +113,7 @@ class SM {
       return null;
   }
   
-  public function isPseudoState(state: Int) : Bool {
+  public function isPseudoState(state: String) : Bool {
       var vertix = this.vertices.get(state);
       
       if (vertix != null) {       
@@ -123,7 +123,7 @@ class SM {
       return true;
   }
   
-  public function isFinalState(state: Int) : Bool {
+  public function isFinalState(state: String) : Bool {
       var vertix = this.vertices.get(state);
       
       if (vertix != null) {       

@@ -8,10 +8,8 @@ class SMBuilder {
         var pos = haxe.macro.Context.currentPos();
         var cl = new Array();
         var umlParser = UmlParser.findUmlParser(resourceName);
-        var id = 0;
         for(c in umlParser.stateDetails) {
-            id++;
-            cl.push({ name : c.name, doc : null, meta : [], access : [], kind : FVar(macro : Int, macro $v{id}), pos : pos });
+            cl.push({ name : c.name, doc : null, meta : [], access : [], kind : FVar(macro : String, macro $v{c.name}), pos : pos });
         }   
         return cl;
     }
@@ -27,10 +25,8 @@ class SMBuilder {
             if (Lambda.has(events, c.name) == false) events.push(c.name);
         }   
         
-        var id = 0;
         for(c in events) {
-            id++;
-            cl.push({ name : c, doc : null, meta : [], access : [], kind : FVar(macro : Int, macro $v{id}), pos : pos });
+            cl.push({ name : c, doc : null, meta : [], access : [], kind : FVar(macro : String, macro $v{c}), pos : pos });
         }   
         return cl;
     }
@@ -38,8 +34,8 @@ class SMBuilder {
     macro public static function buildIState() : Array<Field> {
         var fields = Context.getBuildFields();
         fields = fields.concat((macro class {
-              public var state(get, set) : Int;
-              private var __state : Int;
+              public var state(get, set) : String;
+              private var __state : String;
 
               public function get_state() {
                   return __state;
@@ -56,8 +52,8 @@ class SMBuilder {
     macro public static function buildIEvent() : Array<Field> {
         var fields = Context.getBuildFields();
         fields = fields.concat((macro class {
-              public var event(get, set) : Int;
-              private var __event : Int; 
+              public var event(get, set) : String;
+              private var __event : String; 
              
               public function get_event() {
                   return __event;
@@ -77,7 +73,7 @@ class SMBuilder {
        var umlParser = UmlParser.findUmlParser(resourceName);
        
        //init the state machine and verteics
-       code += '\nvar vertics = new Map<Int, sm.SM.SmVertex>();';
+       code += '\nvar vertics = new Map<String, sm.SM.SmVertex>();';
        code += '\nvar stm = new sm.SM("$resourceName",vertics);';
        
        for (stateId in umlParser.vertics.keys()) {
