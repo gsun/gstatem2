@@ -142,7 +142,9 @@ class SM {
       var my_orig_eventId = my_eventId;
       var transition = this.findTransition(my_stateId, my_eventId, context, my_msg);
 
-      while (transition != null) {            
+      while (transition != null) {     
+          trace("transition " + transition.description);
+		  
           for (behavior in transition.behaviors) {        
               if ((behavior.transit == null) &&
                   (behavior.nextState != my_stateId)) {
@@ -160,6 +162,7 @@ class SM {
               var my_excpt_msg = null;
               if (behavior.transit != null) {
                   try {
+					  trace("action: " + behavior.transit);
                       Reflect.callMethod(context, Reflect.field(context, behavior.transit), [my_msg]);
                   } catch (err : Dynamic) {
                       my_excpt_msg =  err;
@@ -167,6 +170,7 @@ class SM {
               } 
               else if (behavior.entryExit != null) {
                   try {
+					  trace("action: " + behavior.entryExit);
                       Reflect.callMethod(context, Reflect.field(context, behavior.entryExit), []);
                   } catch (err : Dynamic) {
                       my_excpt_msg =  err;
