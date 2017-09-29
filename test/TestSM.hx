@@ -23,7 +23,6 @@ class TestSM  extends haxe.unit.TestCase {
         //StateA Event1 guard1(true) 
         cb = new TestCb(StateA);
         cb.guard1 = function guard1(event:TestMsg) : Bool {
-            trace("guard1");
             return true;
         }
         var event = new TestMsg(Event1);
@@ -57,11 +56,9 @@ class TestSM  extends haxe.unit.TestCase {
         //StateE Event4 guard3(true)
         cb = new TestCb(StateE);
         cb.guard4 = function guard4(event:TestMsg) : Bool {
-            trace("guard4");
             return false;
         }
         cb.guard3 = function guard3(event:TestMsg) : Bool {
-            trace("guard3");
             return true;
         }
         var event = new TestMsg(Event4);
@@ -71,7 +68,6 @@ class TestSM  extends haxe.unit.TestCase {
         //StateE Event4
         cb = new TestCb(StateE);
         cb.guard4 = function guard4(event:TestMsg) : Bool {
-            trace("guard4");
             return false;
         }
         var event = new TestMsg(Event4);
@@ -105,7 +101,6 @@ class TestSM  extends haxe.unit.TestCase {
         //StateF Event1 guard1(false)
         cb = new TestCb(StateF);      
         cb.guard2 = function guard2(event:TestMsg) : Bool {
-            trace("guard2");
             return false;
         }        
         var event = new TestMsg(Event1);
