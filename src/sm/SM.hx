@@ -18,14 +18,14 @@ class TransitionBehavior {
     public var entryExit: String;
     
     public var nextState : Int;
-	public var nextStateStr : String;
+    public var nextStateStr : String;
 
     public function new(a, b, c, d, e) {
         this.description = a;
         this.transit = b;
         this.entryExit = c;
         this.nextState = d;
-		this.nextStateStr = e;
+        this.nextStateStr = e;
     }
 } 
  
@@ -144,7 +144,7 @@ class SM {
 
       while (transition != null) {     
           trace("transition " + transition.description);
-		  
+          
           for (behavior in transition.behaviors) {        
               if ((behavior.transit == null) &&
                   (behavior.nextState != my_stateId)) {
@@ -162,7 +162,7 @@ class SM {
               var my_excpt_msg = null;
               if (behavior.transit != null) {
                   try {
-					  trace("action: " + behavior.transit);
+                      trace("action: " + behavior.transit);
                       Reflect.callMethod(context, Reflect.field(context, behavior.transit), [my_msg]);
                   } catch (err : Dynamic) {
                       my_excpt_msg =  err;
@@ -170,7 +170,7 @@ class SM {
               } 
               else if (behavior.entryExit != null) {
                   try {
-					  trace("action: " + behavior.entryExit);
+                      trace("action: " + behavior.entryExit);
                       Reflect.callMethod(context, Reflect.field(context, behavior.entryExit), []);
                   } catch (err : Dynamic) {
                       my_excpt_msg =  err;

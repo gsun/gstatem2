@@ -5,7 +5,7 @@ class TestCb {
   @:isVar public var state(default, default) : Int;
    
   public function new(s:Int) {
-	  state = s;
+      state = s;
   }
  
   public function destructor() {} 

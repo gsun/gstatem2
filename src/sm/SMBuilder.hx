@@ -8,10 +8,10 @@ class SMBuilder {
         var pos = haxe.macro.Context.currentPos();
         var cl = new Array();
         var umlParser = UmlParser.findUmlParser(resourceName);
-		
-		var id = 0;
+        
+        var id = 0;
         for(c in umlParser.stateDetails) {
-			id++;
+            id++;
             cl.push({ name : c.name, doc : null, meta : [], access : [], kind : FVar(macro : Int, macro $v{id}), pos : pos });
         }   
         return cl;
@@ -27,15 +27,15 @@ class SMBuilder {
         for(c in umlParser.eventDetails) {
             if (Lambda.has(events, c.name) == false) events.push(c.name);
         }
-		
+        
         var id = 0;
         for(c in events) {
-			id++;
+            id++;
             cl.push({ name : c, doc : null, meta : [], access : [], kind : FVar(macro : Int, macro $v{id}), pos : pos });
         }   
         return cl;
     }
-	
+    
     macro public static function buildIState() : Array<Field> {
         var fields = Context.getBuildFields();
         fields = fields.concat((macro class {
@@ -48,7 +48,7 @@ class SMBuilder {
         var fields = Context.getBuildFields();
         fields = fields.concat((macro class {
               public var event(default, default) : Int;
-			  }).fields);
+              }).fields);
         return fields;
     }  
         
