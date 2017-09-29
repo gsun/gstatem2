@@ -1,6 +1,12 @@
 import sm.SM;
-import TestCb.TestState;
-import TestMsg.TestEvent;
+
+@:build(sm.SMBuilder.buildState("umltest"))
+@:enum
+abstract TestState(Int) from Int to Int {}
+
+@:build(sm.SMBuilder.buildEvent("umltest"))
+@:enum
+abstract TestEvent(Int) from Int to Int {}
 
 class TestSM  extends haxe.unit.TestCase {
 

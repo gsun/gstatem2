@@ -1,12 +1,10 @@
 import TestMsg;
 
-@:build(sm.SMBuilder.buildState("umltest"))
-@:enum
-abstract TestState(String) from String to String {}
+class TestCb {
 
-class TestCb implements sm.SM.IState {
-
-  public function new(s:TestState) {
+  @:isVar public var state(default, default) : Int;
+   
+  public function new(s:Int) {
 	  state = s;
   }
  

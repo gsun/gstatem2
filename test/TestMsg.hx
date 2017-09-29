@@ -1,18 +1,10 @@
-@:build(sm.SMBuilder.buildEvent("umltest"))
-@:enum
-abstract TestEvent(String) from String to String {}
+class TestMsg  {
 
-class TestMsg implements sm.SM.IEvent {
-
-    public var sm(get, never) : String;    
-    private var my_sm:String; 
-    
-    public function get_sm() : String {
-        return this.my_sm;
-    }
-    
-    public function new(e:TestEvent) {
+    @:isVar public var sm(default, default) : String;    
+    @:isVar public var event(default, default) : Int;
+	
+    public function new(e:Int) {
         event = e;
-        my_sm = "umltest";     
+        sm = "umltest";     
     }
 }

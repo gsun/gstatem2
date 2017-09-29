@@ -8,8 +8,11 @@ class SMBuilder {
         var pos = haxe.macro.Context.currentPos();
         var cl = new Array();
         var umlParser = UmlParser.findUmlParser(resourceName);
+		
+		var id = 0;
         for(c in umlParser.stateDetails) {
-            cl.push({ name : c.name, doc : null, meta : [], access : [], kind : FVar(macro : String, macro $v{c.name}), pos : pos });
+			id++;
+            cl.push({ name : c.name, doc : null, meta : [], access : [], kind : FVar(macro : Int, macro $v{id}), pos : pos });
         }   
         return cl;
     }
@@ -23,52 +26,39 @@ class SMBuilder {
         //different transition may have the same event, so filter the additional same events.
         for(c in umlParser.eventDetails) {
             if (Lambda.has(events, c.name) == false) events.push(c.name);
-        }   
-        
+        }
+		
+        var id = 0;
         for(c in events) {
-            cl.push({ name : c, doc : null, meta : [], access : [], kind : FVar(macro : String, macro $v{c}), pos : pos });
+			id++;
+            cl.push({ name : c, doc : null, meta : [], access : [], kind : FVar(macro : Int, macro $v{id}), pos : pos });
         }   
         return cl;
     }
-    
+	
     macro public static function buildIState() : Array<Field> {
         var fields = Context.getBuildFields();
         fields = fields.concat((macro class {
-              public var state(get, set) : String;
-              private var __state : String;
-
-              public function get_state() {
-                  return __state;
-              }
-              public function set_state(state) {
-                  return __state = state;
-              }}).fields);
+              public var state(default, default) : Int;
+              }).fields);
         return fields;
     }
 
     macro public static function buildIEvent() : Array<Field> {
         var fields = Context.getBuildFields();
         fields = fields.concat((macro class {
-              public var event(get, set) : String;
-              private var __event : String; 
-             
-              public function get_event() {
-                  return __event;
-              }
-
-              public function set_event(event) {
-                  return __event = event;
-              }}).fields);
+              public var event(default, default) : Int;
+			  }).fields);
         return fields;
-    }   
-    
+    }  
+        
     macro public static function buildSM(resourceName:String) :Expr  {
        var code : String = '';
        var expr : Expr = null;
        var umlParser = UmlParser.findUmlParser(resourceName);
        
        //init the state machine and verteics
-       code += '\nvar vertics = new Map<String, sm.SM.SmVertex>();';
+       code += '\nvar vertics = new Map<Int, sm.SM.SmVertex>();';
        code += '\nvar stm = new sm.SM("$resourceName",vertics);';
        
        for (stateId in umlParser.vertics.keys()) {
@@ -95,7 +85,7 @@ class SMBuilder {
                    //init the behavior entrie and add it into the array
                    var transit = behavior.transit!=null?('"${behavior.transit}"'):null;
                    var entryExit = behavior.entryExit!=null?('"${behavior.entryExit}"'):null;
-                   code += '\nbehavior = new sm.SM.TransitionBehavior("${behavior.description}", $transit, $entryExit, ${behavior.nextState});';                                   
+                   code += '\nbehavior = new sm.SM.TransitionBehavior("${behavior.description}", $transit, $entryExit, ${behavior.nextState}, "${behavior.nextState}");';                                   
                    code += '\nbehaviors.push(behavior);';
                }
               
