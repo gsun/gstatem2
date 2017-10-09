@@ -7,9 +7,7 @@ class TestCb {
   public function new(s:Int) {
       state = s;
   }
- 
-  public function destructor() {} 
-  
+   
   public function action1(event:TestMsg) : Void {
     return null;
   }

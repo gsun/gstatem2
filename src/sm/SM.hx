@@ -3,7 +3,6 @@ package sm;
 @:autoBuild(sm.SMBuilder.buildIState())
 interface IState {
   public var state(default, default) : Int;
-  public function destructor() : Void;
 }
 
 @:autoBuild(sm.SMBuilder.buildIEvent())
@@ -207,7 +206,10 @@ class SM {
 
       if (isFinalState(my_stateId))
       {
-          context.destructor();
+          if (Reflect.hasField(context, "destructor")) {
+              trace("object destruct ");
+              Reflect.callMethod(context, Reflect.field(context, "destructor"), []);
+          }
       }
   }
   
