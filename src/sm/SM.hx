@@ -1,15 +1,5 @@
 package sm;
 
-@:autoBuild(sm.SMBuilder.buildIState())
-interface IState {
-  public var state(default, default) : Int;
-}
-
-@:autoBuild(sm.SMBuilder.buildIEvent())
-interface IEvent {
-  public var event(default, default) : Int;
-}
-
 class TransitionBehavior {
     public var description : String;
 

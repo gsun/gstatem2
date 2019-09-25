@@ -34,23 +34,7 @@ class SMBuilder {
             cl.push({ name : c, doc : null, meta : [], access : [], kind : FVar(macro : Int, macro $v{id}), pos : pos });
         }   
         return cl;
-    }
-    
-    macro public static function buildIState() : Array<Field> {
-        var fields = Context.getBuildFields();
-        fields = fields.concat((macro class {
-              public var state(default, default) : Int;
-              }).fields);
-        return fields;
-    }
-
-    macro public static function buildIEvent() : Array<Field> {
-        var fields = Context.getBuildFields();
-        fields = fields.concat((macro class {
-              public var event(default, default) : Int;
-              }).fields);
-        return fields;
-    }  
+    } 
         
     macro public static function buildSM(resourceName:String) :Expr  {
        var code : String = '';
