@@ -69,7 +69,7 @@ class SMBuilder {
            
            //init the vertix and transition array.
            code += '\nvar transitions = new Array<sm.SM.SmTransition>();';
-           code += '\nvar vertix = new sm.SM.SmVertex(${stateDetail.name}, transitions, ${stateDetail.pseudo}, ${stateDetail.final});';
+           code += '\nvar vertix = new sm.SM.SmVertex(${stateDetail.name}, transitions, ${stateDetail.pseudo}, ${stateDetail.term});';
            code += '\nvertics.set(${stateDetail.name}, vertix);';
            
            for (priorityItem in priorityItems) {

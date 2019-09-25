@@ -9,7 +9,7 @@ private typedef StateItem = {
     incoming:String,  //incmoing transition list.
     outgoing:String,  //outgoing transition list.
     simple:Bool,      //state without children states.
-    final:Bool,       //the terminate state.
+    term:Bool,       //the terminate state.
     pseudo:Bool,      //stereotype defined by user, also should be simple.
 }
 
@@ -118,14 +118,14 @@ class UmlParser {
         var incoming = e.get("incoming");
         var outgoing = e.get("outgoing");
         var simple = (e.nodeName == "UML:SimpleState") ? true:false;
-        var final = (e.nodeName == "UML:FinalState") ? true:false;  
+        var term = (e.nodeName == "UML:FinalState") ? true:false;  
         
         stateDetails.set(id,  { name:name, 
                                 container:container, 
                                 incoming:incoming, 
                                 outgoing:outgoing,
                                 simple:simple,
-                                final:final,
+                                term:term,
                                 pseudo:false});
         
     }
@@ -322,7 +322,7 @@ class UmlParser {
             var stateItem:StateItem = stateDetails.get(stateId);
             if (stateItem.container != ancestor) continue;
             if (stateItem.simple == true || 
-                stateItem.final == true) {
+                stateItem.term == true) {
                 subStates.push( {  compositeStates:inComposites.copy(),
                                    atomState:stateId });
             }
@@ -351,7 +351,7 @@ class UmlParser {
             var targetStateDetail = stateDetails.get(transDetail.target);
             if (targetStateDetail == null) SM.err('\nAudit Failure: can not find the state details with state id $transDetail.target');
             if (targetStateDetail.name == null) SM.err('\nAudit Failure: no name configured with state id $transDetail.target');
-            if (targetStateDetail.simple != true && targetStateDetail.final != true) {
+            if (targetStateDetail.simple != true && targetStateDetail.term != true) {
                 SM.err('\nAudit Failure: none atom state with target name $targetStateDetail.name');
             }
         }
@@ -460,8 +460,8 @@ class UmlParser {
         for (stateId in stateDetails.keys()) {
             var stateDetail = stateDetails.get(stateId);
             
-            //add final as vertix for destructor in runtime
-            if (stateDetail.final == true) {
+            //add term as vertix for destructor in runtime
+            if (stateDetail.term == true) {
                 vertics.set(stateId, []);
                 continue;
             }
