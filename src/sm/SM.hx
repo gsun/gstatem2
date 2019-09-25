@@ -140,26 +140,26 @@ class SM {
       var transition = this.findTransition(my_stateId, my_eventId, context, my_msg);
 
       while (transition != null) {     
-          trace("transition " + transition.description);
+          #if debug  trace("transition " + transition.description); #end
           
           for (behavior in transition.behaviors) {        
               if ((behavior.transit == null) &&
                   (behavior.nextState != my_stateId)) {
                   //get next state for loop
                   my_stateId = behavior.nextState;
-                  trace("dynamic state before transition " + behavior.nextStateStr);
+                  #if debug trace("dynamic state before transition " + behavior.nextStateStr); #end
                   
                   //set the state for the object
                   if (this.isPseudoState(my_stateId) != true) {
                       Reflect.setProperty(context, "state", behavior.nextState);
-                      trace("object state before transition " + behavior.nextStateStr);
+                      #if debug trace("object state before transition " + behavior.nextStateStr); #end
                   }
               }               
               
               var my_excpt_msg = null;
               if (behavior.transit != null) {
                   try {
-                      trace("action: " + behavior.transit);
+                      #if debug trace("action: " + behavior.transit); #end
                       Reflect.callMethod(context, Reflect.field(context, behavior.transit), [my_msg]);
                   } catch (err : Dynamic) {
                       my_excpt_msg =  err;
@@ -167,7 +167,7 @@ class SM {
               } 
               else if (behavior.entryExit != null) {
                   try {
-                      trace("action: " + behavior.entryExit);
+                      #if debug trace("action: " + behavior.entryExit); #end
                       Reflect.callMethod(context, Reflect.field(context, behavior.entryExit), []);
                   } catch (err : Dynamic) {
                       my_excpt_msg =  err;
@@ -178,12 +178,12 @@ class SM {
                   (behavior.nextState != my_stateId)) {
                   //get next state for loop
                   my_stateId = behavior.nextState;
-                  trace("dynamic state after  transition " + behavior.nextStateStr);
+                  #if debug trace("dynamic state after  transition " + behavior.nextStateStr); #end
                   
                   //set the state for the object
                   if (this.isPseudoState(my_stateId) != true) {
                       Reflect.setProperty(context, "state", behavior.nextState);
-                      trace("object state after  transition " + behavior.nextStateStr);
+                      #if debug trace("object state after  transition " + behavior.nextStateStr); #end
                   }
               }
               
@@ -205,7 +205,7 @@ class SM {
       if (isFinalState(my_stateId))
       {
           if (Reflect.hasField(context, "destructor")) {
-              trace("object destruct ");
+              #if debug trace("object destruct "); #end
               Reflect.callMethod(context, Reflect.field(context, "destructor"), []);
           }
       }
