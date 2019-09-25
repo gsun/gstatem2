@@ -1,5 +1,13 @@
 package sm;
 
+interface IState<T> {
+  public var state(default, default) : T;
+}
+
+interface IEvent<T> {
+  public var event(default, default) : T;
+}
+
 class TransitionBehavior {
     public var description : String;
 

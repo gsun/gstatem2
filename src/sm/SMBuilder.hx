@@ -37,9 +37,9 @@ class SMBuilder {
     } 
         
     macro public static function buildSM(resourceName:String) :Expr  {
-       var code : String = '';
-       var expr : Expr = null;
        var umlParser = UmlParser.findUmlParser(resourceName);
+       
+       var code : String = '';
        
        //init the state machine and verteics
        code += '\nvar vertics = new Map<Int, sm.SM.SmVertex>();';
@@ -88,12 +88,11 @@ class SMBuilder {
        code += '\nreturn stm;';
               
        code = '(function() :sm.SM {$code})()';
-       expr = Context.parseInlineString(code, Context.makePosition({ min:0, max:0, file:resourceName}));
        
        #if debug
        trace(code);  
        #end
        
-       return expr;
+       return Context.parseInlineString(code, Context.makePosition({ min:0, max:0, file:resourceName}));
     }
 }
